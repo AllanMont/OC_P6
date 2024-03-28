@@ -1,7 +1,7 @@
-<div>
+<div class="min-lg:p-10 max-lg:p-5 mt-14">
   <div class="flex flex-col">
-    <p>Titre de l'article sélectionné</p>
-    <div class="flex">
+    <h2>Titre de l'article sélectionné</h2>
+    <div class="flex my-4">
         <p>Date</p>
         <p class="mx-6">Auteur</p>
         <p>Thème</p>
@@ -11,13 +11,17 @@
         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
         when an unknown printer took a galley of type and scrambled...
     </p>
-    <hr/>
+    <hr class="my-4"/>
     <p>Commentaires</p>
-    <div class="flex">
-        <p>username</p>
+    <div class="flex justify-center mt-5">
+        <p class="mr-4">username</p>
         <div class="post_display">
             contenu du commentaire
         </div>
+    </div>
+    <div class="flex justify-center">
+        <textarea class="w-1/2 h-40 mt-5 p-2 border-black border-2 rounded-xl" placeholder="Ecrivez ici votre commentaire"></textarea>
+        <button class="button_bgpurple_colorwhite self-center ml-5 mt-5">Commenter</button>
     </div>
   </div>
 </div>
