@@ -12,9 +12,10 @@ import { PostComponent } from './pages/post/post.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PostDetailComponent } from './pages/post-detail/post-detail.component';
 import { PostCreateComponent } from './pages/post-create/post-create.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, SubjectComponent, PostComponent, ProfileComponent, PostDetailComponent, PostCreateComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, SubjectComponent, PostComponent, ProfileComponent, PostDetailComponent, PostCreateComponent, HeaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
