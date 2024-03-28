@@ -1,1 +1,15 @@
-<p>post-create works!</p>
+<div class="flex flex-col justify-center">
+    <div class="flex justify-center mt-14">
+        <h1>Créer un nouvel article</h1>
+    </div>
+    <div class="mt-15 flex flex-col justify-center items-center">
+        <form (ngSubmit)="onSubmit()">
+            <div class="flex flex-col my-12">
+                <input type="text" formControlName="subject" class="form-control input_borderblack" id="subject" placeholder="Sélectionner un thème" required>
+                <input type="text" formControlName="titlePost" class="form-control my-5 input_borderblack" id="titlePost" placeholder="Titre de l'article" required>
+                <textarea formControlName="contentPost" class="form-control h-72 input_borderblack" id="contentPost" placeholder="Contenu de l'article" required></textarea>
+            </div>
+        </form>
+        <button type="submit" class="button_bgpurple_colorwhite" [disabled]="!registerForm.valid">Créer</button>
+    </div>
+</div>
