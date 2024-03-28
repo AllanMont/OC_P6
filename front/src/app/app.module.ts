@@ -10,9 +10,11 @@ import { RegisterComponent } from './pages/register/register.component';
 import { SubjectComponent } from './pages/subject/subject.component';
 import { PostComponent } from './pages/post/post.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { PostDetailComponent } from './pages/post-detail/post-detail.component';
+import { PostCreateComponent } from './pages/post-create/post-create.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, SubjectComponent, PostComponent, ProfileComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, SubjectComponent, PostComponent, ProfileComponent, PostDetailComponent, PostCreateComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
