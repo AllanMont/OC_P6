@@ -28,7 +28,7 @@ CREATE TABLE `posts` (
     FOREIGN KEY (author_id) REFERENCES users(id)
 );
 
-CREATE TABLE `commments` (
+CREATE TABLE `comments` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     content TEXT NOT NULL,
     article_id INT,
