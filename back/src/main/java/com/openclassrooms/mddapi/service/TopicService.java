@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.model.Topic;
@@ -11,6 +13,14 @@ public class TopicService {
 
     public TopicService(TopicRepository topicRepository) {
         this.topicRepository = topicRepository;
+    }
+
+    public List<Topic> getAllTopics(String name) {
+        return topicRepository.findAll();
+    }
+
+    public Topic getTopicById(Integer id) {
+        return topicRepository.findById(id).orElse(null);
     }
 
     public void create(Topic topic) {
