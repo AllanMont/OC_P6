@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleDto {
+public class PostDto {
   private Integer id;
   private String title;
   private String content;

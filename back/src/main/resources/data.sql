@@ -12,15 +12,16 @@ VALUES
     ('Topic 2', 'Description for Topic 2', CURRENT_TIMESTAMP),
     ('Topic 3', 'Description for Topic 3', CURRENT_TIMESTAMP);
 
--- Insertion des articles
+-- Insertion des posts
 INSERT INTO posts (title, content, topic_id, author_id, created_at)
 VALUES
     ('Post 1', 'Content of Post 1', 1, 1, CURRENT_TIMESTAMP),
     ('Post 2', 'Content of Post 2', 2, 2, CURRENT_TIMESTAMP),
-    ('Post 3', 'Content of Post 3', 3, 3, CURRENT_TIMESTAMP);
+    ('Post 3', 'Content of Post 3', 3, 3, CURRENT_TIMESTAMP),
+    ('Post 4', 'Content of Post 4', 1, 2, CURRENT_TIMESTAMP);
 
 -- Insertion des commentaires
-INSERT INTO comments (content, article_id, author_id, created_at)
+INSERT INTO comments (content, post_id, author_id, created_at)
 VALUES
     ('Comment 1 on Post 1', 1, 2, CURRENT_TIMESTAMP),
     ('Comment 2 on Post 1', 1, 3, CURRENT_TIMESTAMP),

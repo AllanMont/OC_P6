@@ -31,10 +31,10 @@ CREATE TABLE `posts` (
 CREATE TABLE `comments` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     content TEXT NOT NULL,
-    article_id INT,
+    post_id INT,
     author_id INT,
     created_at TIMESTAMP,
-    FOREIGN KEY (article_id) REFERENCES posts(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id),
     FOREIGN KEY (author_id) REFERENCES users(id)
 );
 
