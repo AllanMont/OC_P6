@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SubscriptionDto {
   private Integer userId;
-  private Integer subjectId;
+  private Integer topicId;
   private LocalDateTime createdAt;
 }

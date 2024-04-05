@@ -13,7 +13,7 @@ VALUES
     ('Topic 3', 'Description for Topic 3', CURRENT_TIMESTAMP);
 
 -- Insertion des articles
-INSERT INTO posts (title, content, subject_id, author_id, created_at)
+INSERT INTO posts (title, content, topic_id, author_id, created_at)
 VALUES
     ('Post 1', 'Content of Post 1', 1, 1, CURRENT_TIMESTAMP),
     ('Post 2', 'Content of Post 2', 2, 2, CURRENT_TIMESTAMP),
@@ -30,7 +30,7 @@ VALUES
     ('Comment 2 on Post 3', 3, 2, CURRENT_TIMESTAMP);
 
 -- Insertion des abonnements
-INSERT INTO subscriptions (user_id, subject_id, created_at)
+INSERT INTO subscriptions (user_id, topic_id, created_at)
 VALUES
     (1, 1, CURRENT_TIMESTAMP),  -- User 1 s'abonne à Topic 1
     (1, 2, CURRENT_TIMESTAMP),  -- User 1 s'abonne à Topic 2

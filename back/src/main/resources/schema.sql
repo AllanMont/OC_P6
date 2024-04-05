@@ -21,10 +21,10 @@ CREATE TABLE `posts` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
-    subject_id INT,
+    topic_id INT,
     author_id INT,
     created_at TIMESTAMP NOT NULL,
-    FOREIGN KEY (subject_id) REFERENCES topics(id),
+    FOREIGN KEY (topic_id) REFERENCES topics(id),
     FOREIGN KEY (author_id) REFERENCES users(id)
 );
 
@@ -40,9 +40,9 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `subscriptions` (
     user_id INT,
-    subject_id INT,
+    topic_id INT,
     created_at TIMESTAMP NOT NULL,
-    PRIMARY KEY (user_id, subject_id),
+    PRIMARY KEY (user_id, topic_id),
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (subject_id) REFERENCES topics(id)
+    FOREIGN KEY (topic_id) REFERENCES topics(id)
 );

@@ -14,7 +14,7 @@ public class ArticleDto {
   private Integer id;
   private String title;
   private String content;
-  private Integer subjectId;
+  private Integer topicId;
   private Integer authorId;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
