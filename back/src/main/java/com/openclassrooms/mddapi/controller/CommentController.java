@@ -1,0 +1,58 @@
+package com.openclassrooms.mddapi.controller;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.openclassrooms.mddapi.dto.CommentDto;
+import com.openclassrooms.mddapi.model.Comment;
+import com.openclassrooms.mddapi.service.CommentService;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
+@RestController
+@RequestMapping("/comments")
+public class CommentController {
+    private final CommentService commentService;
+
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
+
+    @GetMapping("/post/{id}")
+    public List<Comment> getAllCommentsByPostId(@PathVariable Integer id) {
+        return commentService.getAllCommentsByPostId(id);
+    }
+    
+    @PostMapping()
+    public ResponseEntity create(@RequestBody CommentDto comment) {
+        Comment newComment = new Comment();
+        newComment.setPostId(comment.getPostId());
+        newComment.setAuthorId(comment.getAuthorId());
+        newComment.setContent(comment.getContent());
+        newComment.setCreatedAt(LocalDateTime.now());
+        
+        commentService.create(newComment);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Integer id) {
+        if(commentService.getCommentById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        commentService.delete(id);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+}
