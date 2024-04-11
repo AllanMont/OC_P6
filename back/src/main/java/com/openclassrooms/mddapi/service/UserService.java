@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.model.User;
@@ -13,6 +15,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public User getUserByName(String name) {
+        return userRepository.findByName(name);
+    }
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -21,11 +27,15 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public void create(User user) {
-        userRepository.save(user);
-    }
+    public boolean checkPassword(User user, String password) {
+		return user.getPassword().equals(password);
+	}
 
-    public void update(User user) {
-        userRepository.save(user);
-    }
+	public boolean isUserExistByEmail(String email) {
+		return userRepository.findByEmail(email) != null;
+	}
+
+	public User createUser(String name, String email, String password) {
+		return userRepository.save(User.builder().name(name).email(email).password(password).createdAt(LocalDateTime.now()).build());
+	}
 }
