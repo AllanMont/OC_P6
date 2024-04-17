@@ -33,7 +33,7 @@ public class CommentController {
     }
     
     @PostMapping()
-    public ResponseEntity create(@RequestBody CommentDto comment) {
+    public ResponseEntity<HttpStatus> create(@RequestBody CommentDto comment) {
         Comment newComment = new Comment();
         newComment.setPostId(comment.getPostId());
         newComment.setAuthorId(comment.getAuthorId());
@@ -46,7 +46,7 @@ public class CommentController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
         if(commentService.getCommentById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

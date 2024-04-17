@@ -55,7 +55,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody PostDto post) {
+    public ResponseEntity<HttpStatus> create(@RequestBody PostDto post) {
         if(userService.getUserById(post.getAuthorId()) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -76,7 +76,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
         if(postService.getPostById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

@@ -41,7 +41,7 @@ public class SubscriptionController {
     }
     
     @PostMapping
-    public ResponseEntity create(@RequestBody SubscriptionDto subscriptionDto) {
+    public ResponseEntity<HttpStatus> create(@RequestBody SubscriptionDto subscriptionDto) {
     SubscriptionId subscriptionId = new SubscriptionId(
         subscriptionDto.getUserId(),
         subscriptionDto.getTopicId()
@@ -69,7 +69,7 @@ public class SubscriptionController {
 }
 
     @DeleteMapping
-    public ResponseEntity delete(@RequestBody SubscriptionDto subscriptionDto) {
+    public ResponseEntity<HttpStatus> delete(@RequestBody SubscriptionDto subscriptionDto) {
         SubscriptionId subscriptionId = new SubscriptionId(
             subscriptionDto.getUserId(),
             subscriptionDto.getTopicId()

@@ -40,7 +40,7 @@ public class TopicController {
 
 
     @PostMapping
-    public ResponseEntity create(@RequestBody TopicDto topic) {
+    public ResponseEntity<HttpStatus> create(@RequestBody TopicDto topic) {
         Topic newTopic = new Topic();
         newTopic.setName(topic.getName());
         newTopic.setDescription(topic.getDescription());
