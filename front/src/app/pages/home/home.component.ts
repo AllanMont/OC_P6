@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import "../../app.component.scss"
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -10,7 +12,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  start() {
-    alert('Commencez par lire le README et à vous de jouer !');
+  login() {
+    window.location.href = "/login";
+  }
+
+  register() {
+    window.location.href = "/register";
   }
 }
