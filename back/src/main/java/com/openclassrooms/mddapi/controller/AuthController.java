@@ -85,9 +85,9 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<UserDto> getLoggedInUserInfo(Authentication authentication) {
-        String mailToVerify = authentication.getName();
+        Integer userId = userService.getUserIdByName(authentication);
 
-        User user = authService.getLoggedInUser(mailToVerify);
+        User user = authService.getUserById(userId);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

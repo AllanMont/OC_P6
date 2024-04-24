@@ -1,10 +1,10 @@
 package com.openclassrooms.mddapi.controller;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,22 +36,26 @@ public class SubscriptionController {
     }
 
     @GetMapping()
-    public Boolean isSubscriptionExist(@RequestParam Integer userId, @RequestParam Integer topicId) {
+    public Boolean isSubscriptionExist(@RequestParam Integer topicId,Authentication authentication) {
+        Integer userId = userService.getUserIdByName(authentication);
+        
         return subscriptionService.getSubscriptionByUserIdAndTopicId(userId, topicId) != null;
     }
     
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody SubscriptionDto subscriptionDto) {
+    public ResponseEntity<HttpStatus> create(@RequestBody SubscriptionDto subscriptionDto, Authentication authentication) {
+        Integer userId = userService.getUserIdByName(authentication);
+
     SubscriptionId subscriptionId = new SubscriptionId(
-        subscriptionDto.getUserId(),
+        userId,
         subscriptionDto.getTopicId()
     );
 
-    if (subscriptionService.getSubscriptionByUserIdAndTopicId(subscriptionDto.getUserId(), subscriptionDto.getTopicId()) != null) {
+    if (subscriptionService.getSubscriptionByUserIdAndTopicId(userId, subscriptionDto.getTopicId()) != null) {
         return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    if(userService.getUserById(subscriptionDto.getUserId()) == null) {
+    if(userService.getUserById(userId) == null) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
     else if(topicService.getTopicById(subscriptionDto.getTopicId()) == null) {
@@ -69,13 +73,15 @@ public class SubscriptionController {
 }
 
     @DeleteMapping
-    public ResponseEntity<HttpStatus> delete(@RequestBody SubscriptionDto subscriptionDto) {
+    public ResponseEntity<HttpStatus> delete(@RequestBody SubscriptionDto subscriptionDto, Authentication authentication) {
+        Integer userId = userService.getUserIdByName(authentication);
+
         SubscriptionId subscriptionId = new SubscriptionId(
-            subscriptionDto.getUserId(),
+            userId,
             subscriptionDto.getTopicId()
         );
 
-        if (subscriptionService.getSubscriptionByUserIdAndTopicId(subscriptionDto.getUserId(), subscriptionDto.getTopicId()) == null) {
+        if (subscriptionService.getSubscriptionByUserIdAndTopicId(userId, subscriptionDto.getTopicId()) == null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 

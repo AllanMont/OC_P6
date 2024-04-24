@@ -62,14 +62,14 @@ public class AuthenticationService {
         }
     }
 
-    public User getLoggedInUser(String email) {
-        return userRepository.findByEmail(email);
+    public User getLoggedInUser(String name) {
+        return userRepository.findByName(name);
     }
 
-    public Optional<User> getUserById(Integer id) {
+    public User getUserById(Integer id) {
         if(!userRepository.findById(id).isPresent()) {
             throw new RuntimeException("User not found");
         }
-        return userRepository.findById(id);
+        return userRepository.findById(id).get();
     }
 }

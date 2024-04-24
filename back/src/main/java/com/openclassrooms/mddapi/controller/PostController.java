@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,19 +56,24 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody PostDto post) {
-        if(userService.getUserById(post.getAuthorId()) == null) {
+    public ResponseEntity<HttpStatus> create(@RequestBody PostDto post, Authentication authentication) {
+        Integer userId = userService.getUserIdByName(authentication);
+
+        if(userService.getUserById(userId) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         else if(topicService.getTopicById(post.getTopicId()) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        else if(userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         Post newPost = new Post();
         newPost.setTitle(post.getTitle());
         newPost.setContent(post.getContent());
         newPost.setTopicId(post.getTopicId());
-        newPost.setAuthorId(post.getAuthorId());
+        newPost.setAuthorId(userId);
         newPost.setCreatedAt(LocalDateTime.now());
 
         postService.create(newPost);

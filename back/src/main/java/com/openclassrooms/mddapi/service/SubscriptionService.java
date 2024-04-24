@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.service;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.model.Subscription;
-import com.openclassrooms.mddapi.model.SubscriptionId;
 import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 
 @Service

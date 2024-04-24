@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.service.CommentService;
+import com.openclassrooms.mddapi.service.UserService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -22,9 +25,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
+    private final UserService userService;
 
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, UserService userService) {
         this.commentService = commentService;
+        this.userService = userService;
     }
 
     @GetMapping("/post/{id}")
@@ -33,10 +38,12 @@ public class CommentController {
     }
     
     @PostMapping()
-    public ResponseEntity<HttpStatus> create(@RequestBody CommentDto comment) {
+    public ResponseEntity<HttpStatus> create(@RequestBody CommentDto comment, Authentication authentication) {
+        Integer userId = userService.getUserIdByName(authentication);
+
         Comment newComment = new Comment();
         newComment.setPostId(comment.getPostId());
-        newComment.setAuthorId(comment.getAuthorId());
+        newComment.setAuthorId(userId);
         newComment.setContent(comment.getContent());
         newComment.setCreatedAt(LocalDateTime.now());
         

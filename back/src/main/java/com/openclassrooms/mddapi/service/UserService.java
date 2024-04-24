@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.service;
 
 import java.time.LocalDateTime;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.model.User;
@@ -17,6 +18,14 @@ public class UserService {
 
     public User getUserByName(String name) {
         return userRepository.findByName(name);
+    }
+
+    public Integer getUserIdByName(Authentication authentication) {
+        User userFind = userRepository.findByName(authentication.getName());
+        if (userFind == null) {
+            return null;
+        }
+        return userFind.getId();
     }
 
     public User getUserByEmail(String email) {
