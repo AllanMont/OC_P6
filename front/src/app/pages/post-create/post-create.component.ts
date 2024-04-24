@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-post-create',
+  templateUrl: './post-create.component.html',
+  styleUrls: ['./post-create.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class PostCreateComponent implements OnInit {
 
   registerForm: FormGroup = new FormGroup({
-    username: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    subject: new FormControl('', Validators.required),
+    titlePost: new FormControl('', Validators.required),
+    contentPost: new FormControl('', Validators.required)
   });
-
   constructor() { }
 
   ngOnInit(): void {
@@ -24,9 +24,5 @@ export class ProfileComponent implements OnInit {
     } else {
       console.log('Formulaire invalide, veuillez vérifier les champs.');
     }
-  }
-
-  onDisconnect(){
-    console.log('Déconnexion en cours...');
   }
 }
