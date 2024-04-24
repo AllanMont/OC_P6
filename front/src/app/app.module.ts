@@ -10,16 +10,26 @@ import { RegisterComponent } from './pages/register/register.component';
 import { TopicComponent } from './pages/topic/topic.component';
 import { PostComponent } from './pages/post/post.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { HeaderComponent } from './components/header/header.component';
+import { PostCreateComponent } from './pages/post-create/post-create.component';
+import { PostDetailComponent } from './pages/post-detail/post-detail.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, TopicComponent, PostComponent, ProfileComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, TopicComponent, PostComponent, PostCreateComponent, PostDetailComponent, ProfileComponent, HeaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [
+    HeaderComponent,
+  ],
 })
 export class AppModule {}

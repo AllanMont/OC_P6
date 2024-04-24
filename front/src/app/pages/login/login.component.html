@@ -1,18 +1,21 @@
+<app-header></app-header>
 <div class="flex flex-col justify-center">
     <div class="flex justify-center mt-14">
         <h1>Se connecter</h1>
     </div>
     <div class="mt-15 flex flex-col justify-center items-center">
-        <form (ngSubmit)="onSubmit()">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="flex flex-col my-12">
-                <label for="username">E-mail ou Nom d'utilisateur</label>
-                <input type="text" formControlName="username" class="form-control input_borderblack" id="username" required>
+                <label for="email">E-mail</label>
+                <input type="text" formControlName="email" class="form-control input_borderblack" id="email" required>
             </div>
             <div class="flex flex-col my-12">
                 <label for="password">Mot de passe</label>
                 <input type="password" formControlName="password" class="form-control input_borderblack" id="password" required>
             </div>
+            <!-- Affichage du message d'erreur -->
+            <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
+            <button type="submit" class="button_bgpurple_colorwhite" [disabled]="!loginForm.valid">Se connecter</button>
         </form>
-        <button type="submit" class="button_bgpurple_colorwhite" [disabled]="!registerForm.valid">Se connecter</button>
     </div>
 </div>

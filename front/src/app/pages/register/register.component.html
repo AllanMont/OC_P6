@@ -1,8 +1,11 @@
+<app-header></app-header>
 <div class="flex flex-col justify-center">
     <div class="flex justify-center mt-14">
         <h1>Inscription</h1>
     </div>
     <div class="mt-15 flex flex-col justify-center items-center">
+        <!-- Affichage du message d'erreur -->
+        <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
         <form (ngSubmit)="onSubmit()">
             <div class="flex flex-col my-12">
                 <label class="text-center" for="username">Nom d'utilisateur</label>

@@ -5,7 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { PostComponent } from './pages/post/post.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { SubjectComponent } from './pages/subject/subject.component';
+import { TopicComponent } from './pages/topic/topic.component';
 import { PostDetailComponent } from './pages/post-detail/post-detail.component';
 import { PostCreateComponent } from './pages/post-create/post-create.component';
 
@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'post/:id', component: PostDetailComponent },
   { path: 'post-create', component: PostCreateComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'subject', component: SubjectComponent },
+  { path: 'topic', component: TopicComponent },
 ];
 
 @NgModule({
