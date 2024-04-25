@@ -10,4 +10,5 @@ import com.openclassrooms.mddapi.model.SubscriptionId;
 public interface SubscriptionRepository extends JpaRepository<Subscription, SubscriptionId> {
 
     Subscription findByIdUserIdAndIdTopicId(Integer userId, Integer topicId);
+    Subscription findByIdUserId(Integer userId);
 }

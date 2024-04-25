@@ -1,32 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { SubscriptionService } from 'src/app/core/services/subscription.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  userId: number = 0;
+  userProfile: any;
+  userSubscriptions: any[] = [];
 
-  registerForm: FormGroup = new FormGroup({
-    username: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
-  });
-
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private authenticationService: AuthenticationService,
+    private subscriptionService: SubscriptionService
+  ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.userId = params['id'];
+      this.loadUserProfile(this.userId);
+      this.loadUserSubscriptions(this.userId);
+    });
   }
 
-  onSubmit() {
-    if (this.registerForm.valid) {
-      console.log('Formulaire valide, soumission en cours...');
-    } else {
-      console.log('Formulaire invalide, veuillez vérifier les champs.');
-    }
+  loadUserProfile(userId: number) {
+    this.authenticationService.infoUser().subscribe(
+      (data: any) => {
+        this.userProfile = data;
+      },
+      error => {
+        console.error('Erreur lors du chargement du profil :', error);
+      }
+    );
   }
 
-  onDisconnect(){
-    console.log('Déconnexion en cours...');
+  loadUserSubscriptions(userId: number) {
+    this.subscriptionService.getSubscriptionsByUserId().subscribe(
+      (data: any) => {
+        this.userSubscriptions = data;
+      },
+      error => {
+        console.error('Erreur lors du chargement des abonnements :', error);
+      }
+    );
+  }
+
+  onDisconnect() {
+    this.authenticationService.logout();
   }
 }

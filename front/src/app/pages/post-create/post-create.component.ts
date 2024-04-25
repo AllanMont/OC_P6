@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PostService } from 'src/app/core/services/post.service';
 
 @Component({
   selector: 'app-post-create',
@@ -8,19 +9,37 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class PostCreateComponent implements OnInit {
 
-  registerForm: FormGroup = new FormGroup({
-    subject: new FormControl('', Validators.required),
-    titlePost: new FormControl('', Validators.required),
-    contentPost: new FormControl('', Validators.required)
-  });
-  constructor() { }
+  postForm: FormGroup | any;
+  message: string = '';
+
+  constructor(private formBuilder: FormBuilder, private postService: PostService) { }
 
   ngOnInit(): void {
+    this.postForm = this.formBuilder.group({
+      subject: ['', Validators.required],
+      titlePost: ['', Validators.required],
+      contentPost: ['', Validators.required]
+    });
   }
 
   onSubmit() {
-    if (this.registerForm.valid) {
+    if (this.postForm.valid) {
       console.log('Formulaire valide, soumission en cours...');
+      const post = {
+        subject: this.postForm.value.subject,
+        title: this.postForm.value.titlePost,
+        content: this.postForm.value.contentPost
+      };
+      this.postService.createPost(post).subscribe(
+        response => {
+          console.log('Article créé avec succès :', response);
+          this.message = 'L\'article a été créé avec succès.';
+        },
+        error => {
+          console.error('Erreur lors de la création de l\'article :', error);
+          this.message = 'Une erreur s\'est produite lors de la création de l\'article. Veuillez réessayer.';
+        }
+      );
     } else {
       console.log('Formulaire invalide, veuillez vérifier les champs.');
     }

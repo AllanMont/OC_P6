@@ -24,4 +24,8 @@ public class SubscriptionService {
     public Subscription getSubscriptionByUserIdAndTopicId(Integer userId, Integer topicId) {
         return subscriptionRepository.findByIdUserIdAndIdTopicId(userId, topicId);
     }
+
+    public Subscription getSubscriptionsByUserId(Integer userId) {
+        return subscriptionRepository.findByIdUserId(userId);
+    }
 }

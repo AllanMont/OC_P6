@@ -21,4 +21,8 @@ export class AuthenticationService {
   infoUser() {
     return this.http.get(`${this.apiURL}/me`);
   }
+
+  logout() {
+    localStorage.removeItem('token');
+  }
 }

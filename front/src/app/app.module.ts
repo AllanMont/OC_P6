@@ -15,6 +15,7 @@ import { PostCreateComponent } from './pages/post-create/post-create.component';
 import { PostDetailComponent } from './pages/post-detail/post-detail.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, TopicComponent, PostComponent, PostCreateComponent, PostDetailComponent, ProfileComponent, HeaderComponent],
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

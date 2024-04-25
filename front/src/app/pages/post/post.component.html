@@ -1,69 +1,32 @@
 <app-header></app-header>
+
 <div class="flex flex-col min-lg:p-10 max-lg:p-5 mt-14">
     <div class="">
         <div class="flex max-lg:flex-col justify-between items-center">
-            <a href="/post-create">
-                <button class="button_bgpurple_colorwhite" >Créer un article</button>
+            <a routerLink="/post-create">
+                <button class="button_bgpurple_colorwhite">Créer un article</button>
             </a>
             <div class="flex max-lg:mt-10">
                 <p>Trier par</p>
-                <p>↓</p>
+                <select [(ngModel)]="sortBy" (change)="onSortChange()">
+                    <option value="date">Date</option>
+                    <option value="author">Auteur</option>
+                    <!-- Ajoutez d'autres options de tri si nécessaire -->
+                </select>
             </div>
         </div>
     </div>
 
     <div class="flex flex-wrap justify-between mt-10">
-        <div class="flex flex-col min-lg:w-[calc(50%-1rem)] max-lg:w-full post_display">
-            <h2>Titre de l'article</h2>
-            <div class="flex">
-                <p class="pr-10">Date</p>
-                <p class="pl-10">Auteur</p>
-            </div>
-            <p>
-                Lorem ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled...
-            </p>
-        </div>
-        
-        <div class="flex flex-col min-lg:w-[calc(50%-1rem)] max-lg:w-full post_display">
-            <h2>Titre de l'article</h2>
-            <div class="flex">
-                <p class="pr-10">Date</p>
-                <p class="pl-10">Auteur</p>
-            </div>
-            <p>
-                Lorem ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled...
-            </p>
-        </div>
-
-        <div class="flex flex-col min-lg:w-[calc(50%-1rem)] max-lg:w-full post_display">
-            <h2>Titre de l'article</h2>
-            <div class="flex">
-                <p class="pr-10">Date</p>
-                <p class="pl-10">Auteur</p>
-            </div>
-            <p>
-                Lorem ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled...
-            </p>
-        </div>
-
-        <div class="flex flex-col min-lg:w-[calc(50%-1rem)] max-lg:w-full post_display">
-            <h2>Titre de l'article</h2>
-            <div class="flex">
-                <p class="pr-10">Date</p>
-                <p class="pl-10">Auteur</p>
-            </div>
-            <p>
-                Lorem ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled...
-            </p>
+        <div *ngFor="let post of sortedPosts" class="flex flex-col min-lg:w-[calc(50%-1rem)] max-lg:w-full post_display">
+            <a [routerLink]="['/post-detail', post.id]">
+                <h2>{{ post.title }}</h2>
+                <div class="flex">
+                    <p class="pr-10">{{ post.date }}</p>
+                    <p class="pl-10">{{ post.author }}</p>
+                </div>
+                <p>{{ post.content }}</p>
+            </a>
         </div>
     </div>
-
 </div>

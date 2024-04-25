@@ -92,4 +92,11 @@ public class SubscriptionController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getSubscriptionsByUserId(Authentication authentication) {
+        Integer userId = userService.getUserIdByName(authentication);
+
+        return ResponseEntity.ok(subscriptionService.getSubscriptionsByUserId(userId));
+    }
 }

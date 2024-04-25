@@ -21,4 +21,8 @@ export class SubscriptionService {
   deleteSubscription(id: number) {
     return this.http.delete(`${this.apiURL}/${id}`);
   }
+
+  getSubscriptionsByUserId() {
+    return this.http.get(`${this.apiURL}/user`);
+  }
 }

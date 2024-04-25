@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(user).subscribe(
         response => {
-          // Connexion réussie, rediriger l'utilisateur vers une autre page par exemple
           console.log('Connexion réussie :', response);
         },
         error => {
