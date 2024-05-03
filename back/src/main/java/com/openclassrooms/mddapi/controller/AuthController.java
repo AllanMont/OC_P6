@@ -53,7 +53,7 @@ public class AuthController {
         }
 
         if (user == null || !userService.checkPassword(user, password)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(Collections.singletonMap("error", "User not found or incorrect credentials"));
         }
     
