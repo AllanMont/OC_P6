@@ -7,5 +7,5 @@ export interface User {
   }
   
   export interface Jwt {
-    jwt?: string;
+    token?: string;
   }
