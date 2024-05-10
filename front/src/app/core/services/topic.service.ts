@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -11,14 +11,25 @@ export class TopicService {
   constructor(private http: HttpClient) { }
 
   getAllTopics() {
-    return this.http.get(`${this.apiURL}`);
+    return this.http.get(`${this.apiURL}`, this.getHttpOptions());
   }
 
   getTopicById(id: number) {
-    return this.http.get(`${this.apiURL}/${id}`);
+    return this.http.get(`${this.apiURL}/${id}`, this.getHttpOptions());
   }
 
   createTopic(topic: any) {
-    return this.http.post(`${this.apiURL}`, topic);
+    return this.http.post(`${this.apiURL}`, topic, this.getHttpOptions());
+  }
+
+  private getHttpOptions() {
+    const authToken = sessionStorage.getItem('jwt');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      })
+    };
+    return httpOptions;
   }
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient,HttpHeaders } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -9,17 +9,22 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private apiURL = environment.API_URL + '/api/auth';
+  apiURL = environment.API_URL + '/api/auth';
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.getToken()}`
+    })
+  };
 
   constructor(private http: HttpClient) { }
 
   login(credentials: { emailOrName: string, password: string }): Observable<Jwt> {
-    return this.http.post<Jwt>(`${this.apiURL}/login`, credentials)
+    return this.http.post(`${this.apiURL}/login`, credentials)
       .pipe(
         map((response: Jwt) => {
-          if (response && response.jwt) {
-            this.setToken(response.jwt);
-            return response;
+          if (response && response.token) {
+            this.setToken(response.token);
           }
           throw new Error('Invalid response from server');
         }),
@@ -33,9 +38,10 @@ export class AuthenticationService {
     return this.http.post<Jwt>(`${this.apiURL}/register`, credentials)
       .pipe(
         map((response: Jwt) => {
-          if (response && response.jwt) {
-            this.setToken(response.jwt);
-            return response;
+          console.log('response', response)
+          if (response && response.token) {
+            console.log('set token')
+            this.setToken(response.token);
           }
           throw new Error('Invalid response from server');
         }),
@@ -54,12 +60,7 @@ export class AuthenticationService {
   }
   
   infoUser(): Observable<User> {
-    return this.http.get<User>(`${this.apiURL}/me`)
-      .pipe(
-        catchError((error: any) => {
-          return throwError('Failed to fetch user information.');
-        })
-      );
+    return this.http.get<User>(`${this.apiURL}/me`, this.httpOptions);
   }
 
   logout() {
