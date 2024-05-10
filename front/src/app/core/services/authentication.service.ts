@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  login(credentials: { emailOrUsername: string, password: string }): Observable<Jwt> {
+  login(credentials: { emailOrName: string, password: string }): Observable<Jwt> {
     return this.http.post(`${this.apiURL}/login`, credentials)
       .pipe(
         map((response: Jwt) => {
@@ -24,8 +24,8 @@ export class AuthenticationService {
       )
   }
 
-  register(credentials: { username: string, email: string, password: string }): Observable<Jwt> {
-    return this.http.post(`${this.apiURL}/register`, credentials)
+  register(credentials: { name: string, email: string, password: string }): Observable<Jwt> {
+    return this.http.post<Jwt>(`${this.apiURL}/register`, credentials)
       .pipe(
         map((response: Jwt) => {
           if (response && response.jwt) {
