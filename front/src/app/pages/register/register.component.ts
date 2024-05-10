@@ -45,8 +45,13 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/profile']); 
         },
         error => {
-          console.error('Erreur lors de l\'inscription :', error);
-          this.errorMessage = 'Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.';
+          if (error.status === 409) {
+            this.errorMessage = 'Un compte existe déjà avec cet email.';
+          }
+          else{
+            console.error('Erreur lors de l\'inscription :', error);
+            this.errorMessage = 'Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.';
+          }
         }
       );
     } else {
