@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Jwt, User } from '../interfaces/user.interface';
 import { environment } from 'src/environments/environment';
 
@@ -8,32 +9,40 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  apiURL = environment.API_URL + '/api/auth';
+  private apiURL = environment.API_URL + '/api/auth';
 
   constructor(private http: HttpClient) { }
 
-  login(credentials: { emailOrUsername: string, password: string }): Observable<Jwt> {
-    return this.http.post(`${this.apiURL}/login`, credentials)
+  login(credentials: { emailOrName: string, password: string }): Observable<Jwt> {
+    return this.http.post<Jwt>(`${this.apiURL}/login`, credentials)
       .pipe(
         map((response: Jwt) => {
           if (response && response.jwt) {
             this.setToken(response.jwt);
+            return response;
           }
-          return response
+          throw new Error('Invalid response from server');
+        }),
+        catchError((error: any) => {
+          return throwError('Failed to log in. Please try again.');
         })
-      )
+      );
   }
 
-  register(credentials: { username: string, email: string, password: string }): Observable<Jwt> {
-    return this.http.post(`${this.apiURL}/register`, credentials)
+  register(credentials: { name: string, email: string, password: string }): Observable<Jwt> {
+    return this.http.post<Jwt>(`${this.apiURL}/register`, credentials)
       .pipe(
         map((response: Jwt) => {
           if (response && response.jwt) {
             this.setToken(response.jwt);
+            return response;
           }
-          return response
+          throw new Error('Invalid response from server');
+        }),
+        catchError((error: any) => {
+          return throwError('Failed to register. Please try again.', error);
         })
-      )
+      );
   }
 
   getToken(): string | null {
@@ -44,11 +53,16 @@ export class AuthenticationService {
     sessionStorage.setItem('jwt', token);
   }
   
-  infoUser() {
-    return this.http.get(`${this.apiURL}/me`);
+  infoUser(): Observable<User> {
+    return this.http.get<User>(`${this.apiURL}/me`)
+      .pipe(
+        catchError((error: any) => {
+          return throwError('Failed to fetch user information.');
+        })
+      );
   }
 
   logout() {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('jwt');
   }
 }

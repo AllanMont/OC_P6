@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const user: {emailOrUsername: string, password: string} = {
-        emailOrUsername: this.loginForm.value.email,
+      const user: {emailOrName: string, password: string} = {
+        emailOrName: this.loginForm.value.email,
         password: this.loginForm.value.password
       };
 
