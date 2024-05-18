@@ -11,7 +11,7 @@
                 <select [(ngModel)]="sortBy" (change)="onSortChange()">
                     <option value="date">Date</option>
                     <option value="author">Auteur</option>
-                    <!-- Ajoutez d'autres options de tri si nécessaire -->
+                    <option value="title">Titre</option>
                 </select>
             </div>
         </div>
@@ -22,7 +22,7 @@
             <a [routerLink]="['/post-detail', post.id]">
                 <h2>{{ post.title }}</h2>
                 <div class="flex">
-                    <p class="pr-10">{{ post.date }}</p>
+                    <p class="pr-10">{{ post.date | date }}</p>
                     <p class="pl-10">{{ post.author }}</p>
                 </div>
                 <p>{{ post.content }}</p>

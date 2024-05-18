@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostService } from 'src/app/core/services/post.service';
 import { TopicService } from 'src/app/core/services/topic.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-post-create',
@@ -17,7 +19,8 @@ export class PostCreateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private postService: PostService,
-    private topicService: TopicService
+    private topicService: TopicService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +50,7 @@ export class PostCreateComponent implements OnInit {
       };
       this.postService.createPost(post).subscribe(
         response => {
-          this.message = 'L\'article a été créé avec succès.';
+          this.router.navigate(['/post']);
         },
         error => {
           console.error('Erreur lors de la création de l\'article :', error);

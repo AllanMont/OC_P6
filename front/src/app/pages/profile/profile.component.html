@@ -15,11 +15,10 @@
     </div>
     <hr class="my-2"/>
     <h1 class="text-center font-bold">Abonnements</h1>
-    <div class="flex">
+    <div class="flex flex-wrap justify-between mt-10">
         <div *ngFor="let subscription of userSubscriptions" class="flex flex-col self-center min-lg:w-[calc(50%-2rem)] max-lg:w-[calc(100%-1rem)] post_display">
             <h2 class="font-bold">{{ subscription.title }}</h2>
-            <p>{{ subscription.description }}</p>
-            <button class="button_bgpurple_colorwhite self-center my-5">Se désabonner</button>
+            <button class="button_bgpurple_colorwhite self-center my-5" (click)="onUnsubscribe(subscription.id.topicId)">Se désabonner</button>
         </div>
     </div>
 </div>

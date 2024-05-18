@@ -27,10 +27,14 @@ export class SubscriptionService {
   }
 
   deleteSubscription(id: number) {
-    return this.http.delete(`${this.apiURL}/${id}`, this.httpOptions);
+    return this.http.delete(`${this.apiURL}?idSubscription=${id}`, this.httpOptions);
   }
 
   getSubscriptionsByUserId() {
     return this.http.get(`${this.apiURL}/user`, this.httpOptions);
+  }
+
+  getTopicById(topicId: number) {
+    return this.http.get(`${this.apiURL}/topic?topicId=${topicId}` , this.httpOptions);
   }
 }

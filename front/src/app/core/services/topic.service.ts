@@ -23,7 +23,7 @@ export class TopicService {
   }
 
   subscribeToTopic(topicId: number) {
-    return this.http.post(`${this.apiURL}/subscriptions`, { topicId }, this.getHttpOptions());
+    return this.http.post(`${environment.API_URL}/subscriptions`, topicId , this.getHttpOptions());
   }
 
   private getHttpOptions() {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { SubscriptionService } from 'src/app/core/services/subscription.service';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -23,7 +24,7 @@ export class ProfileComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.userId = params['id'];
       this.loadUserProfile(this.userId);
-      this.loadUserSubscriptions(this.userId);
+      this.loadUserSubscriptions();
     });
   }
 
@@ -38,13 +39,34 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  loadUserSubscriptions(userId: number) {
+  loadUserSubscriptions() {
     this.subscriptionService.getSubscriptionsByUserId().subscribe(
       (data: any) => {
         this.userSubscriptions = data;
+        this.userSubscriptions.forEach(subscription => {
+          this.subscriptionService.getTopicById(subscription.id.topicId).subscribe(
+            (topicData: any) => {
+              subscription.title = topicData.name;
+            },
+            error => {
+              console.error('Erreur lors de la récupération du sujet :', error);
+            }
+          );
+        });
       },
       error => {
         console.error('Erreur lors du chargement des abonnements :', error);
+      }
+    );
+  }
+
+  onUnsubscribe(subscriptionId: number) {
+    this.subscriptionService.deleteSubscription(subscriptionId).subscribe(
+      (data: any) => {
+        this.loadUserSubscriptions();
+      },
+      error => {
+        console.error('Erreur lors de la suppression de l\'abonnement :', error);
       }
     );
   }

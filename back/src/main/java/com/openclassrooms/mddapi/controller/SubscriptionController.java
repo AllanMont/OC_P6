@@ -74,15 +74,15 @@ public class SubscriptionController {
 }
 
     @DeleteMapping
-    public ResponseEntity<HttpStatus> delete(@RequestBody SubscriptionDto subscriptionDto, Authentication authentication) {
+    public ResponseEntity<HttpStatus> delete(@RequestParam Integer idSubscription, Authentication authentication) {
         Integer userId = userService.getUserIdByName(authentication);
 
         SubscriptionId subscriptionId = new SubscriptionId(
             userId,
-            subscriptionDto.getTopicId()
+            idSubscription
         );
 
-        if (subscriptionService.getSubscriptionByUserIdAndTopicId(userId, subscriptionDto.getTopicId()) == null) {
+        if (subscriptionService.getSubscriptionByUserIdAndTopicId(userId, idSubscription) == null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
@@ -102,5 +102,8 @@ public class SubscriptionController {
         return ResponseEntity.ok(subscriptions);
     }
 
-
+    @GetMapping("/topic")
+    public ResponseEntity<?> getTitleTopicById(@RequestParam Integer topicId) {
+        return ResponseEntity.ok(topicService.getTopicById(topicId));
+    }
 }
