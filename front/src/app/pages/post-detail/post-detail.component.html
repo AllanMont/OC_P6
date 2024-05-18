@@ -12,14 +12,15 @@
     <hr class="my-4"/>
     <p>Commentaires</p>
     <div *ngFor="let comment of comments" class="flex justify-center mt-5">
-      <p class="mr-4">{{ comment.username }}</p>
+      {{comment}}
+      <p class="mr-4">{{ comment.name }}</p>
       <div class="post_display">
         {{ comment.content }}
       </div>
     </div>
     <div class="flex justify-center">
-      <textarea class="w-1/2 h-40 mt-5 p-2 border-black border-2 rounded-xl" placeholder="Ecrivez ici votre commentaire"></textarea>
-      <button class="button_bgpurple_colorwhite self-center ml-5 mt-5">Commenter</button>
+      <textarea class="w-1/2 h-40 mt-5 p-2 border-black border-2 rounded-xl" placeholder="Ecrivez ici votre commentaire" [(ngModel)]="newComment"></textarea>
+      <button class="button_bgpurple_colorwhite self-center ml-5 mt-5" (click)="onComment()">Commenter</button>
     </div>
   </div>
 </div>

@@ -24,7 +24,6 @@ export class PostCreateComponent implements OnInit {
 
   onSubmit() {
     if (this.postForm.valid) {
-      console.log('Formulaire valide, soumission en cours...');
       const post = {
         subject: this.postForm.value.subject,
         title: this.postForm.value.titlePost,
@@ -32,7 +31,6 @@ export class PostCreateComponent implements OnInit {
       };
       this.postService.createPost(post).subscribe(
         response => {
-          console.log('Article créé avec succès :', response);
           this.message = 'L\'article a été créé avec succès.';
         },
         error => {
@@ -41,6 +39,7 @@ export class PostCreateComponent implements OnInit {
         }
       );
     } else {
+      this.message = 'Formulaire invalide, veuillez vérifier les champs.';
       console.log('Formulaire invalide, veuillez vérifier les champs.');
     }
   }

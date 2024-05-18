@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { Router } from '@angular/router';
 
@@ -26,14 +26,13 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const user: {emailOrName: string, password: string} = {
-        emailOrName: this.loginForm.value.email,
+      const user: {email: string, password: string} = {
+        email: this.loginForm.value.email,
         password: this.loginForm.value.password
       };
 
       this.authService.login(user).subscribe(
         response => {
-          console.log('Connexion réussie :', response);
           this.router.navigate(['/profile']); 
         },
         error => {
@@ -42,6 +41,7 @@ export class LoginComponent implements OnInit {
         }
       );
     } else {
+      this.errorMessage = 'Formulaire invalide, veuillez vérifier les champs.';
       console.log('Formulaire invalide, veuillez vérifier les champs.');
     }
   }

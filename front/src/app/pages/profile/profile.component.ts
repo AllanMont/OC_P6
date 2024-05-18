@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { SubscriptionService } from 'src/app/core/services/subscription.service';
 @Component({
@@ -15,7 +15,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    private subscriptionService: SubscriptionService
+    private subscriptionService: SubscriptionService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -50,5 +51,6 @@ export class ProfileComponent implements OnInit {
 
   onDisconnect() {
     this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 }

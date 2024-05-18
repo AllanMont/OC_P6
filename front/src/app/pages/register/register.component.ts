@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   errorMessage: string = '';
 
-  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder,private router: Router, private cookieService: CookieService) {
+  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -22,8 +22,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onSubmit() {
     if (this.registerForm.valid) {
@@ -35,26 +34,24 @@ export class RegisterComponent implements OnInit {
 
       this.authService.register(user).subscribe(
         response => {
-          console.log('Inscription réussie :', response);
           const token = response.token; // Assurez-vous que la réponse contient le token
-          console.log('response:', response)
           if (token) {
-            console.log('Token reçu :', token)
             this.cookieService.set('token', token); // Stockez le token dans un cookie nommé 'token'
           }
-          this.router.navigate(['/profile']); 
+          this.router.navigate(['/profile']);
         },
         error => {
           if (error.status === 409) {
+            console.error('Un compte existe déjà avec cet email.');
             this.errorMessage = 'Un compte existe déjà avec cet email.';
-          }
-          else{
+          } else {
             console.error('Erreur lors de l\'inscription :', error);
             this.errorMessage = 'Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.';
           }
         }
       );
     } else {
+      this.errorMessage = 'Formulaire invalide, veuillez vérifier les champs.';
       console.log('Formulaire invalide, veuillez vérifier les champs.');
     }
   }

@@ -4,7 +4,7 @@
         <div *ngFor="let topic of topics" class="flex flex-col min-lg:w-[calc(50%-1rem)] max-lg:w-full post_display">
             <h2>{{ topic.title }}</h2>
             <p>{{ topic.description }}</p>
-            <button class="button_bgpurple_colorwhite self-center">S'abonner</button>
+            <button class="button_bgpurple_colorwhite self-center" (click)="onSubscribe(topic.id)">S'abonner</button>
         </div>
     </div>
 </div>

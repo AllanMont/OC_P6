@@ -42,14 +42,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> getToken(@RequestBody LoginRequest loginDetails) {
-        String name = loginDetails.getName();
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody LoginRequest loginDetails) {
         String email = loginDetails.getEmail();
         String password = loginDetails.getPassword();
     
         User user = userService.getUserByEmail(email);
         if (user == null) {
-            user = userService.getUserByName(name);
+            user = userService.getUserByName(email);
         }
 
         if (user == null || !userService.checkPassword(user, password)) {
@@ -69,7 +68,7 @@ public class AuthController {
     
         boolean userExists = userService.isUserExistByEmail(email);
         if (userExists) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.CONFLICT)
             .body(Collections.singletonMap("error", "User with this email already exists"));
         }
     

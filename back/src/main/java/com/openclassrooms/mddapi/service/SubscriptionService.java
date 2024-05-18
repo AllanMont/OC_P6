@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.model.Subscription;
@@ -25,7 +27,7 @@ public class SubscriptionService {
         return subscriptionRepository.findByIdUserIdAndIdTopicId(userId, topicId);
     }
 
-    public Subscription getSubscriptionsByUserId(Integer userId) {
+    public List<Subscription> getSubscriptionsByUserId(Integer userId) {
         return subscriptionRepository.findByIdUserId(userId);
     }
 }

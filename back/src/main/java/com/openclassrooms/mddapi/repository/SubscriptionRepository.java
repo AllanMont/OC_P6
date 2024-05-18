@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +12,5 @@ import com.openclassrooms.mddapi.model.SubscriptionId;
 public interface SubscriptionRepository extends JpaRepository<Subscription, SubscriptionId> {
 
     Subscription findByIdUserIdAndIdTopicId(Integer userId, Integer topicId);
-    Subscription findByIdUserId(Integer userId);
+    List<Subscription> findByIdUserId(Integer userId);
 }

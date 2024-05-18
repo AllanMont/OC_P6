@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controller;
 
 import java.time.LocalDateTime;
 
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -96,7 +97,10 @@ public class SubscriptionController {
     @GetMapping("/user")
     public ResponseEntity<?> getSubscriptionsByUserId(Authentication authentication) {
         Integer userId = userService.getUserIdByName(authentication);
+        List<Subscription> subscriptions = subscriptionService.getSubscriptionsByUserId(userId);
 
-        return ResponseEntity.ok(subscriptionService.getSubscriptionsByUserId(userId));
+        return ResponseEntity.ok(subscriptions);
     }
+
+
 }

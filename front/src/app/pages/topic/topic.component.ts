@@ -15,6 +15,17 @@ export class TopicComponent implements OnInit {
     this.loadAllTopics();
   }
 
+  onSubscribe(topic: any) {
+    this.topicService.subscribeToTopic(topic.id).subscribe(
+      (data: any) => {
+        topic.subscribed = true;
+      },
+      error => {
+        console.error('Erreur lors de l\'abonnement au thème :', error);
+      }
+    );
+  }
+  
   loadAllTopics() {
     this.topicService.getAllTopics().subscribe(
       (data: any) => {

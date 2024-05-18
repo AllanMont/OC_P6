@@ -22,6 +22,10 @@ export class TopicService {
     return this.http.post(`${this.apiURL}`, topic, this.getHttpOptions());
   }
 
+  subscribeToTopic(topicId: number) {
+    return this.http.post(`${this.apiURL}/subscriptions`, { topicId }, this.getHttpOptions());
+  }
+
   private getHttpOptions() {
     const authToken = sessionStorage.getItem('jwt');
     const httpOptions = {
