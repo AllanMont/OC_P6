@@ -6,12 +6,16 @@
     <div class="mt-15 flex flex-col justify-center items-center">
         <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
             <div class="flex flex-col my-12">
-                <input type="text" formControlName="subject" class="form-control input_borderblack" id="subject" placeholder="Sélectionner un thème" required>
+                <label for="topic">Sélectionner un thème:</label>
+                <select id="topic" formControlName="selectedTopic" required>
+                    <option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</option>
+                </select>
+                
                 <input type="text" formControlName="titlePost" class="form-control my-5 input_borderblack" id="titlePost" placeholder="Titre de l'article" required>
                 <textarea formControlName="contentPost" class="form-control h-72 input_borderblack" id="contentPost" placeholder="Contenu de l'article" required></textarea>
             </div>
+            <button type="submit" class="button_bgpurple_colorwhite" [disabled]="!postForm.valid">Créer l'article</button>
         </form>
         <div *ngIf="message" class="text-center text-red-500">{{ message }}</div>
-        <button type="submit" class="button_bgpurple_colorwhite" [disabled]="!postForm.valid">Créer</button>
     </div>
 </div>
