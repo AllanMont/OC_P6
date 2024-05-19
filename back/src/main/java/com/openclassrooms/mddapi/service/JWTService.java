@@ -37,7 +37,6 @@ public class JWTService {
         JwtEncoderParameters encoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
         Jwt jwt = this.jwtEncoder.encode(encoderParameters);
         
-        // Création de l'objet contenant le token
         Map<String, String> tokenObject = new HashMap<>();
         tokenObject.put("token", jwt.getTokenValue());
         

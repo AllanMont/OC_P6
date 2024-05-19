@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
       );
     } else {
       this.errorMessage = 'Formulaire invalide, veuillez vérifier les champs.';
-      console.log('Formulaire invalide, veuillez vérifier les champs.');
     }
   }
 }

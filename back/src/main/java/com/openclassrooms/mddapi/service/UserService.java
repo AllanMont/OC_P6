@@ -47,4 +47,8 @@ public class UserService {
 	public User createUser(String name, String email, String password) {
 		return userRepository.save(User.builder().name(name).email(email).password(password).createdAt(LocalDateTime.now()).build());
 	}
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
 }

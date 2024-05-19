@@ -59,7 +59,6 @@ export class PostCreateComponent implements OnInit {
       );
     } else {
       this.message = 'Formulaire invalide, veuillez vérifier les champs.';
-      console.log('Formulaire invalide, veuillez vérifier les champs.');
     }
   }
 }

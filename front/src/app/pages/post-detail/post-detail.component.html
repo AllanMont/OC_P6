@@ -6,15 +6,16 @@
     <div class="flex my-4">
       <p>{{ post.date }}</p>
       <p class="mx-6">{{ post.author }}</p>
-      <p>{{ post.theme }}</p>
+      <p>{{ post.topicName }}</p>
     </div>
     <p>{{ post.content }}</p>
     <hr class="my-4"/>
     <p>Commentaires</p>
-    <div *ngFor="let comment of comments" class="flex justify-center mt-5">
-      {{comment}}
-      <p class="mr-4">{{ comment.name }}</p>
-      <div class="post_display">
+    <div *ngFor="let comment of comments" class="flex justify-center mt-5 w-full">
+      <div className="w-1/2 flex justify-center">
+        <p class="mr-4">{{ comment.username }}</p>
+      </div>
+      <div class="post_display w-1/2">
         {{ comment.content }}
       </div>
     </div>

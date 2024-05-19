@@ -11,10 +11,8 @@ export class UnauthGuard implements CanActivate {
 
   canActivate(): boolean {
     if (!this.authService.getToken()) {
-      // User is not logged in, allow access
       return true;
     }
-    // User is logged in, redirect to home page
     this.router.navigate(['/post']);
     return false;
   }

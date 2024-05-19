@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.SubscriptionDto;
+import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.SubscriptionId;
 import com.openclassrooms.mddapi.service.SubscriptionService;
@@ -43,36 +44,34 @@ public class SubscriptionController {
         return subscriptionService.getSubscriptionByUserIdAndTopicId(userId, topicId) != null;
     }
     
-    @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody SubscriptionDto subscriptionDto, Authentication authentication) {
+    @PostMapping("/subscribe")
+    public ResponseEntity<HttpStatus> subscribe(@RequestBody Integer topicId, Authentication authentication) {
         Integer userId = userService.getUserIdByName(authentication);
 
-    SubscriptionId subscriptionId = new SubscriptionId(
-        userId,
-        subscriptionDto.getTopicId()
-    );
+        SubscriptionId subscriptionId = new SubscriptionId(
+            userId,
+            topicId
+        );
 
-    if (subscriptionService.getSubscriptionByUserIdAndTopicId(userId, subscriptionDto.getTopicId()) != null) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        if (subscriptionService.getSubscriptionByUserIdAndTopicId(userId, topicId) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
+        if(userService.getUserById(userId) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        else if(topicService.getTopicById(topicId) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Subscription newSubscription = new Subscription();
+        newSubscription.setId(subscriptionId);
+        newSubscription.setCreatedAt(LocalDateTime.now());
+
+        subscriptionService.create(newSubscription);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
-    if(userService.getUserById(userId) == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-    else if(topicService.getTopicById(subscriptionDto.getTopicId()) == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-    
-
-    Subscription newSubscription = new Subscription();
-    newSubscription.setId(subscriptionId);
-    newSubscription.setCreatedAt(LocalDateTime.now());
-
-    subscriptionService.create(newSubscription);
-
-    return ResponseEntity.status(HttpStatus.CREATED).build();
-}
-
     @DeleteMapping
     public ResponseEntity<HttpStatus> delete(@RequestParam Integer idSubscription, Authentication authentication) {
         Integer userId = userService.getUserIdByName(authentication);

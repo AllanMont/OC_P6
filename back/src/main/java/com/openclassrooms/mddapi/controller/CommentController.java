@@ -34,8 +34,6 @@ public class CommentController {
 
     @GetMapping("/post/{id}")
     public List<Comment> getAllCommentsByPostId(@PathVariable Integer id) {
-        System.out.println("getAllCommentsByPostId");
-        System.out.println(id);
         return commentService.getAllCommentsByPostId(id);
     }
     

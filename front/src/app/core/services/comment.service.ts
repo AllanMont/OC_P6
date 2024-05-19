@@ -11,7 +11,7 @@ export class CommentService {
   constructor(private http: HttpClient) { }
 
   getAllCommentsByPostId(postId: number) {
-    return this.http.get(`${this.apiURL}/post/${postId}`);
+    return this.http.get(`${this.apiURL}/post/${postId}`, this.getHttpOptions());
   }
 
   createComment(comment: any) {

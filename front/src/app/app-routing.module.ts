@@ -11,10 +11,8 @@ import { PostCreateComponent } from './pages/post-create/post-create.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { UnauthGuard } from './core/guards/unAuth.guard';
 
-// consider a guard combined with canLoad / canActivate route option
-// to manage unauthenticated user to access private routes
 const routes: Routes = [
-  { path: '', component: HomeComponent},
+  { path: '', component: HomeComponent, canActivate: [UnauthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [UnauthGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [UnauthGuard] },
   { path: 'post', component: PostComponent, canActivate: [AuthGuard] },

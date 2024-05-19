@@ -8,32 +8,37 @@ VALUES
 -- Insertion des sujets
 INSERT INTO topics (name, description, created_at)
 VALUES
-    ('Topic 1', 'Description for Topic 1', CURRENT_TIMESTAMP),
-    ('Topic 2', 'Description for Topic 2', CURRENT_TIMESTAMP),
-    ('Topic 3', 'Description for Topic 3', CURRENT_TIMESTAMP);
+    ('JavaScript', 'Discussion and questions about JavaScript', CURRENT_TIMESTAMP),
+    ('Python', 'All about Python programming and its libraries', CURRENT_TIMESTAMP),
+    ('DevOps', 'Topics related to DevOps practices and tools', CURRENT_TIMESTAMP),
+    ('Web Development', 'Front-end and back-end web development discussions', CURRENT_TIMESTAMP),
+    ('Machine Learning', 'Everything related to Machine Learning and AI', CURRENT_TIMESTAMP);
 
 -- Insertion des posts
 INSERT INTO posts (title, content, topic_id, author_id, created_at)
 VALUES
-    ('Post 1', 'Content of Post 1', 1, 1, CURRENT_TIMESTAMP),
-    ('Post 2', 'Content of Post 2', 2, 2, CURRENT_TIMESTAMP),
-    ('Post 3', 'Content of Post 3', 3, 3, CURRENT_TIMESTAMP),
-    ('Post 4', 'Content of Post 4', 1, 2, CURRENT_TIMESTAMP);
+    ('Understanding Closures in JavaScript', 'Closures are a powerful feature in JavaScript. Here’s a detailed explanation...', 1, 1, CURRENT_TIMESTAMP),
+    ('Best Practices for Writing Python Code', 'Writing clean and efficient Python code can greatly improve your productivity. Let’s discuss...', 2, 2, CURRENT_TIMESTAMP),
+    ('Introduction to Docker for DevOps', 'Docker is a crucial tool for modern DevOps practices. This post covers the basics...', 3, 3, CURRENT_TIMESTAMP),
+    ('Responsive Web Design Tips', 'Creating responsive designs is essential for modern web development. Here are some tips...', 4, 2, CURRENT_TIMESTAMP),
+    ('Getting Started with TensorFlow', 'TensorFlow is a powerful library for machine learning. This post introduces the basics...', 5, 3, CURRENT_TIMESTAMP);
 
 -- Insertion des commentaires
 INSERT INTO comments (content, post_id, author_id, created_at)
 VALUES
-    ('Comment 1 on Post 1', 1, 2, CURRENT_TIMESTAMP),
-    ('Comment 2 on Post 1', 1, 3, CURRENT_TIMESTAMP),
-    ('Comment 1 on Post 2', 2, 1, CURRENT_TIMESTAMP),
-    ('Comment 2 on Post 2', 2, 3, CURRENT_TIMESTAMP),
-    ('Comment 1 on Post 3', 3, 1, CURRENT_TIMESTAMP),
-    ('Comment 2 on Post 3', 3, 2, CURRENT_TIMESTAMP);
+    ('Great explanation on closures, very helpful!', 1, 2, CURRENT_TIMESTAMP),
+    ('I always struggled with closures, this post cleared things up.', 1, 3, CURRENT_TIMESTAMP),
+    ('Thanks for sharing these Python best practices!', 2, 1, CURRENT_TIMESTAMP),
+    ('This is a very comprehensive guide on Docker.', 3, 2, CURRENT_TIMESTAMP),
+    ('I found this article on responsive design very insightful.', 4, 1, CURRENT_TIMESTAMP),
+    ('Excellent introduction to TensorFlow!', 5, 2, CURRENT_TIMESTAMP);
 
 -- Insertion des abonnements
 INSERT INTO subscriptions (user_id, topic_id, created_at)
 VALUES
-    (1, 1, CURRENT_TIMESTAMP),  -- User 1 s'abonne à Topic 1
-    (1, 2, CURRENT_TIMESTAMP),  -- User 1 s'abonne à Topic 2
-    (2, 1, CURRENT_TIMESTAMP),  -- User 2 s'abonne à Topic 1
-    (3, 3, CURRENT_TIMESTAMP);  -- User 3 s'abonne à Topic 3
+    (1, 1, CURRENT_TIMESTAMP),  -- User 1 s'abonne à JavaScript
+    (1, 2, CURRENT_TIMESTAMP),  -- User 1 s'abonne à Python
+    (2, 1, CURRENT_TIMESTAMP),  -- User 2 s'abonne à JavaScript
+    (2, 4, CURRENT_TIMESTAMP),  -- User 2 s'abonne à Web Development
+    (3, 3, CURRENT_TIMESTAMP),  -- User 3 s'abonne à DevOps
+    (3, 5, CURRENT_TIMESTAMP);  -- User 3 s'abonne à Machine Learning

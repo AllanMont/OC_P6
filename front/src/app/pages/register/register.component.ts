@@ -34,9 +34,9 @@ export class RegisterComponent implements OnInit {
 
       this.authService.register(user).subscribe(
         response => {
-          const token = response.token; // Assurez-vous que la réponse contient le token
+          const token = response.token;
           if (token) {
-            this.cookieService.set('token', token); // Stockez le token dans un cookie nommé 'token'
+            this.cookieService.set('token', token);
           }
           this.router.navigate(['/profile']);
         },
@@ -52,7 +52,6 @@ export class RegisterComponent implements OnInit {
       );
     } else {
       this.errorMessage = 'Formulaire invalide, veuillez vérifier les champs.';
-      console.log('Formulaire invalide, veuillez vérifier les champs.');
     }
   }
 }

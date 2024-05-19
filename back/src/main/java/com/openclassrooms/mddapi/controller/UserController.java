@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.UserService;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -28,6 +31,23 @@ public class UserController {
 
 	    if (userFind != null) {
 	        return ResponseEntity.ok(userFind);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+
+	@PutMapping
+	public ResponseEntity<User> updateUser(@RequestBody User user,Authentication authentication) {
+		Integer userId = userService.getUserIdByName(authentication);
+		
+		user.setId(userId);
+		user.setPassword(userService.getUserById(userId).getPassword());
+		user.setCreatedAt(userService.getUserById(userId).getCreatedAt());
+		
+		User userUpdated = userService.updateUser(user);
+
+	    if (userUpdated != null) {
+	        return ResponseEntity.ok(userUpdated);
 	    } else {
 	        return ResponseEntity.notFound().build();
 	    }

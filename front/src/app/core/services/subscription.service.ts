@@ -11,30 +11,34 @@ export class SubscriptionService {
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.authService.getToken()}`
-    })
-  };
+  private getHttpOptions() {
+    const authToken = sessionStorage.getItem('jwt');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      })
+    };
+    return httpOptions;
+  }
 
-  isSubscriptionExist(userId: number, topicId: number) {
-    return this.http.get(`${this.apiURL}/user/${userId}/topic/${topicId}`, this.httpOptions);
+  isSubscriptionExist(topicId: number) {
+    return this.http.get(`${this.apiURL}?topicId=${topicId}`, this.getHttpOptions());
   }
 
   createSubscription(subscription: any) {
-    return this.http.post(`${this.apiURL}`, subscription, this.httpOptions);
+    return this.http.post(`${this.apiURL}`, subscription, this.getHttpOptions());
   }
 
   deleteSubscription(id: number) {
-    return this.http.delete(`${this.apiURL}?idSubscription=${id}`, this.httpOptions);
+    return this.http.delete(`${this.apiURL}?idSubscription=${id}`, this.getHttpOptions());
   }
 
   getSubscriptionsByUserId() {
-    return this.http.get(`${this.apiURL}/user`, this.httpOptions);
+    return this.http.get(`${this.apiURL}/user`, this.getHttpOptions());
   }
 
   getTopicById(topicId: number) {
-    return this.http.get(`${this.apiURL}/topic?topicId=${topicId}` , this.httpOptions);
+    return this.http.get(`${this.apiURL}/topic?topicId=${topicId}` , this.getHttpOptions());
   }
 }

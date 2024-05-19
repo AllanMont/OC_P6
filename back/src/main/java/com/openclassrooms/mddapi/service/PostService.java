@@ -43,8 +43,6 @@ public class PostService {
     }
 
     public void delete(Integer id) {
-        // DELETE ALL COMMENTS RELATED TO THIS POST
-        
         postRepository.deleteById(id);
     }
 }

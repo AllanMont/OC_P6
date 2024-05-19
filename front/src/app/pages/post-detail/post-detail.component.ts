@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from 'src/app/core/services/post.service';
 import { CommentService } from 'src/app/core/services/comment.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { TopicService } from 'src/app/core/services/topic.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -17,7 +19,9 @@ export class PostDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private postService: PostService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private userService: UserService,
+    private topicService: TopicService
   ) { }
 
   ngOnInit(): void {
@@ -30,16 +34,24 @@ export class PostDetailComponent implements OnInit {
 
   onComment() {
     if (this.newComment.trim()) {
-      const comment = {
+      const commentToAdd = {
         content: this.newComment,
         postId: this.post.id,
-        username: 'Current User' // Remplacez par le nom d'utilisateur actuel
+        username: ''
       };
 
-      this.commentService.createComment(comment).subscribe(
+      this.commentService.createComment(commentToAdd).subscribe(
         (response: any) => {
-          this.comments.push(response);
-          this.newComment = '';
+          this.userService.getUserLogged().subscribe(
+            ( user: { name: any; }) => {
+              commentToAdd.username = user.name;
+              this.comments.push(commentToAdd);
+              this.newComment = '';
+            },
+            (error: any) => {
+              console.error('Erreur lors de la récupération du nom de l\'utilisateur :', error);
+            }
+          );
         },
         error => {
           console.error('Erreur lors de l\'ajout du commentaire :', error);
@@ -52,6 +64,14 @@ export class PostDetailComponent implements OnInit {
     this.postService.getPostById(this.postId).subscribe(
       (response: any) => {
         this.post = response;
+        this.topicService.getTopicById(this.post.topicId).subscribe(
+          (topic: any) => {
+            this.post.topicName = topic.name;
+          },
+          error => {
+            console.error('Erreur lors de la récupération des détails du sujet :', error);
+          }
+        );
       },
       error => {
         console.error('Erreur lors de la récupération des détails de l\'article :', error);
@@ -62,8 +82,17 @@ export class PostDetailComponent implements OnInit {
   getComments() {
     this.commentService.getAllCommentsByPostId(this.postId).subscribe(
       (response: any) => {
-        console.log('coms',response);
         this.comments = response;
+        this.comments.forEach(comment => {
+          this.userService.getUserById(comment.authorId).subscribe(
+            (user: { name: any; }) => {
+              comment.username = user.name;
+            },
+            (error: any) => {
+              console.error('Erreur lors de la récupération du nom de l\'utilisateur :', error);
+            }
+          );
+        });
       },
       error => {
         console.error('Erreur lors de la récupération des commentaires :', error);
