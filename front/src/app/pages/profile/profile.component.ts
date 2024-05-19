@@ -12,11 +12,9 @@ import { UserService } from 'src/app/core/services/user.service';
 export class ProfileComponent implements OnInit {
   userId: number = 0;
   userProfile: any;
+  initialProfile: any;
   userSubscriptions: any[] = [];
-  updatedProfile = {
-    name: '',
-    email: '',
-  };
+  updatedProfile: any = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +36,8 @@ export class ProfileComponent implements OnInit {
     this.authenticationService.infoUser().subscribe(
       (data: any) => {
         this.userProfile = data;
+        this.initialProfile = { ...data };
+        this.updatedProfile = { ...data };
       },
       error => {
         console.error('Erreur lors du chargement du profil :', error);
@@ -46,14 +46,31 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    this.userService.updateUser(this.updatedProfile).subscribe(
-      (data: any) => {
-        this.userProfile = data;
-      },
-      error => {
-        console.error('Erreur lors de la mise à jour du profil :', error);
-      }
-    );
+    const changes: any = {};
+
+    if (this.updatedProfile.name !== this.initialProfile.name) {
+      changes.name = this.updatedProfile.name;
+    }
+    if (this.updatedProfile.email !== this.initialProfile.email) {
+      changes.email = this.updatedProfile.email;
+    }
+
+    if (Object.keys(changes).length > 0) {
+      this.userService.updateUser(changes).subscribe(
+        (data: any) => {
+          this.userProfile = { ...this.userProfile, ...changes };
+          this.initialProfile = { ...this.userProfile };
+          this.authenticationService.logout();
+          this.router.navigate(['/login']);
+          
+        },
+        error => {
+          console.error('Erreur lors de la mise à jour du profil :', error);
+        }
+      );
+    } else {
+      console.log('No changes to update.');
+    }
   }
 
   loadUserSubscriptions() {

@@ -40,6 +40,16 @@ public class UserController {
 	public ResponseEntity<User> updateUser(@RequestBody User user,Authentication authentication) {
 		Integer userId = userService.getUserIdByName(authentication);
 		
+		if(userId == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		if(user.getEmail() == null) {
+			user.setEmail(userService.getUserById(userId).getEmail());
+		}
+		if(user.getName() == null) {
+			user.setName(userService.getUserById(userId).getName());
+		}
 		user.setId(userId);
 		user.setPassword(userService.getUserById(userId).getPassword());
 		user.setCreatedAt(userService.getUserById(userId).getCreatedAt());
